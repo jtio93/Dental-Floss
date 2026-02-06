@@ -1,1 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fancy floss - Soft, sustainable floss made from recycled plastic</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #EDE5DB;
+            --cream-light: #F2EBE3;
+            --sage: #9CB8A3;
+            --sage-dark: #6B8272;
+            --forest: #3E5A4A;
+            --charcoal: #2D2D2D;
+            --white: #FFFFFF;
+            --blue-tint: #E8EEF0;
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(180deg, var(--cream-light) 0%, var(--blue-tint) 100%);
+            color: var(--charcoal);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.012) 2px, rgba(0,0,0,0.012) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.012) 2px, rgba(0,0,0,0.012) 4px);
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.35;
+        }
+
+        img {
+            filter: contrast(0.96) saturate(0.90) brightness(1.03);
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.4s ease;
+            background-color: transparent;
+        }
+
+        .header.scrolled {
+            background-color: rgba(242, 235, 227, 0.96);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 1px 20px rgba(0,0,0,0.03);
+            padding: 1.5rem 4rem;
+        }
+
+        .logo {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: var(--forest);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--forest);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--sage-dark);
+        }
+
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+        }
+
+        .hero-image-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 600px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .brand-name {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(4rem, 10vw, 7rem);
+            font-weight: 700;
+            color: var(--forest);
+            margin-bottom: 1.5rem;
+            line-height: 1;
+        }
+
+        .tagline {
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            color: var(--charcoal);
+            font-weight: 300;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            padding: 1.2rem 4rem;
+            background-color: var(--forest);
+            color: var(--white);
+            text-decoration: none;
+            letter-spacing: 0.12em;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .hero-cta:hover {
+            background-color: var(--sage-dark);
+            transform: translateY(-2px);
+        }
+
+        .product-section {
+            padding: 4rem 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2.5rem, 5vw, 3.2rem);
+            color: var(--forest);
+            text-align: center;
+            margin-bottom: 3.5rem;
+            font-weight: 700;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background-color: var(--white);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.04);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 35px rgba(0,0,0,0.08);
+        }
+
+        .product-card.featured {
+            border: 1px solid var(--sage);
+            position: relative;
+        }
+
+        .product-card.featured::before {
+            content: 'Best Value';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--sage-dark);
+            color: var(--white);
+            padding: 0.3rem 1rem;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 240px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--cream-light) 0%, var(--blue-tint) 100%);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .product-name {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6rem;
+            color: var(--forest);
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+
+        .product-intro {
+            font-size: 0.9rem;
+            color: var(--charcoal);
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .product-description {
+            font-size: 0.85rem;
+            color: var(--sage-dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .price-box {
+            margin: 1.5rem 0;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, var(--cream-light) 0%, rgba(242, 235, 227, 0.5) 100%);
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--forest);
+            margin-bottom: 0.2rem;
+        }
+
+        .price-note {
+            font-size: 0.8rem;
+            color: var(--sage-dark);
+        }
+
+        .buy-btn {
+            padding: 1rem 2rem;
+            background-color: var(--forest);
+            color: var(--white);
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.75rem;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .buy-btn:hover {
+            background-color: var(--sage-dark);
+        }
+
+        .story-section {
+            padding: 4rem 2rem;
+            background-color: var(--white);
+            margin-top: 3rem;
+        }
+
+        .story-content {
+            max-width: 750px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .story-text {
+            font-size: 1rem;
+            line-height: 1.9;
+            color: var(--charcoal);
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+
+        .divider {
+            width: 60px;
+            height: 2px;
+            background: var(--sage);
+            margin: 2rem auto;
+        }
+
+        .footer {
+            background-color: var(--forest);
+            color: var(--cream);
+            padding: 3rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .footer-brand {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+
+        .footer-tagline {
+            font-size: 0.85rem;
+            color: var(--sage);
+            margin-bottom: 1.5rem;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--cream);
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.8rem 1.5rem;
+            border: 1px solid var(--sage-dark);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: var(--white);
+            border-color: var(--sage);
+        }
+
+        .copyright {
+            font-size: 0.75rem;
+            color: var(--sage);
+            margin-top: 2rem;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        @media (max-width: 968px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+                max-width: 420px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 1.5rem 2rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .hero {
+                padding: 6rem 1.5rem 3rem;
+            }
+
+            .product-section {
+                padding: 3rem 1.5rem;
+            }
+
+            .story-section {
+                padding: 3rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header" id="header">
+        <a href="#" class="logo">fancy floss</a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#product" class="nav-link">Shop</a></li>
+                <li><a href="#story" class="nav-link">Our Story</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <img src="D1B979B7-71C2-4989-9FCF-5EE20FBDEDB9.PNG" alt="Smile more" class="hero-image-bg">
+        <div class="hero-content">
+            <h1 class="brand-name">fancy floss</h1>
+            <p class="tagline">Soft, sustainable floss made from recycled plastic that feels luxurious on your teeth and gums</p>
+            <a href="#product" class="hero-cta">Shop</a>
+        </div>
+    </section>
+
+    <section class="product-section" id="product">
+        <h2 class="section-title">Shop</h2>
+        
+        <div class="products-grid">
+            <!-- Complete Set -->
+            <div class="product-card featured">
+                <div class="product-image">
+                    <img src="D1B979B7-71C2-4989-9FCF-5EE20FBDEDB9.PNG" alt="Complete Bundle">
+                </div>
+                <h3 class="product-name">Complete Bundle</h3>
+                <p class="product-intro">The ultimate eco‑luxury floss experience.</p>
+                <p class="product-description">Everything you need for 100+ days: 1 container with mint‑waxed floss + 1 eco refill 2‑spool pack.</p>
+                <div class="price-box">
+                    <div class="price">$20.99</div>
+                    <div class="price-note">Best value</div>
+                </div>
+                <a href="YOUR_STRIPE_COMPLETE_SET_LINK" class="buy-btn">Buy Now</a>
+            </div>
+
+            <!-- Starter -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Floss_Package.PNG" alt="Starter">
+                </div>
+                <h3 class="product-name">The Starter</h3>
+                <p class="product-intro">Soft, sustainable, and oh‑so‑fancy.</p>
+                <p class="product-description">Refillable floss that glides like silk. Made from recycled plastic with mint‑waxed floss. Lasts 30–35 days.</p>
+                <div class="price-box">
+                    <div class="price">$8.99</div>
+                    <div class="price-note">Try it first</div>
+                </div>
+                <a href="YOUR_STRIPE_STARTER_LINK" class="buy-btn">Buy Now</a>
+            </div>
+
+            <!-- Refills -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Refill_Front.PNG" alt="Eco Refill">
+                </div>
+                <h3 class="product-name">Eco Refill</h3>
+                <p class="product-intro">Keep the fancy going—sustainably.</p>
+                <p class="product-description">Two 30–35 day spools of luxurious waxed mint floss. Fits perfectly in your container. Plastic‑free packaging.</p>
+                <div class="price-box">
+                    <div class="price">$12.99</div>
+                    <div class="price-note">60-70 days</div>
+                </div>
+                <a href="YOUR_STRIPE_REFILL_LINK" class="buy-btn">Buy Now</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="story-section" id="story">
+        <div class="story-content">
+            <h2 class="section-title">Our Story</h2>
+            <div class="divider"></div>
+            
+            <p class="story-text">
+                It started at Dolores Park in San Francisco. Katie (a dentist) and I (Jacquie, a quality assurance professional) were frustrated with floss options. Most shreds. The sustainable ones are expensive. Nothing looked good on the counter.
+            </p>
+            
+            <p class="story-text">
+                So we made fancy floss. Luxurious mint-waxed floss from Italy that glides like silk. A container made from ocean-bound recycled plastic. Designed in San Francisco, made with the environment in mind.
+            </p>
+            
+            <p class="story-text" style="font-style: italic; color: var(--sage-dark);">
+                Just better floss from two friends who got tired of the options.
+            </p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-brand">fancy floss</div>
+        <div class="footer-tagline">Made in Italy. Designed in San Francisco.</div>
+        
+        <div style="margin: 2rem 0;">
+            <a href="https://instagram.com/fancyfloss415" target="_blank" class="social-link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+                @fancyfloss415
+            </a>
+        </div>
+
+        <div class="copyright">
+            © 2026 Gaia Health SF LLC. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
